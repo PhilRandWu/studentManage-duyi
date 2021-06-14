@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            li {
+                list-style: none;
+            }
+            a {
+                text-decoration: none;
+                color: #fff;
+            }
+            :root,
+            body {
+                width: 100%;
+                height: 100%
+            }
+            .wrapper {
+                width: 100%;
+                height: 100%;
+            }
+            .top {
+                height: 10%;
+                line-height: 110px;
+                background-color: #001529;
+                padding-left: 80px;
+            }
+            .top .logo {
+                height: 50%;
+            }
+            .leftNav {
+                display: inline-block;
+                width: 15%;
+                height: 90%;
+                background-color: #001529;
+                color: #fff;
+                box-sizing: border-box;
+            }
+            .leftNav li {
+                width: 100%;
+                height: 9%;
+                line-height: 71px;
+            }
+            .leftNav li:not(#title) {
+                padding-left: 35%;
+                box-sizing: border-box;
+            }
+            .leftNav #title {
+                padding-left: 12%;
+            }
+            .content {
+                position: absolute;
+                display: inline-block;
+                width: 85%;
+                height: 90%;
+                overflow: hidden;
+            }
+            /* .content .edit-box { */
+                /* display: none; */
+            /* } */
+            .content #list {
+                width: 92%;
+                margin: 50px 50px;
+                box-sizing: border-box;
+            }
+            .content #list table {
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            .content #list thead {
+                background-color: #ccc;
+            }
+            .content #list thead th {
+                padding: 10px 5px;
+                border: 0px solid #fff;
+            }
+            .content #list tbody tr {
+                width: 100%;
+                height: 65px;
+            }
+            .content #list tbody tr button {
+                padding: 5px 10px;
+                margin: 0px 2px;
+                border-radius: 5px;
+                color: #fff;
+            }
+            .content #list tbody tr button.change {
+                background-color: #1890ff;
+            }
+            .content #list tbody tr button.delete {
+                background-color: #f20;
+            }
+            .content > div:not(.edit-box) {
+                display: none;
+            }
+
+            .edit-box{
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: rgba(100,100,100,0.3);
+
+                display: none;
+            }
+            .edit-box .edit-box-content{
+                width: 400px;
+                height: 400px;
+                margin: 200px auto;
+                background: white;
+                padding: 30px;
+            }
+            h2{
+                margin-bottom: 20px;
+            }
+            .edit-box .edit-box-content form div{
+                height: 40px;
+                /* 怪异盒子 宽度 = width*/
+                /* 正常盒模型   宽度 = width+border+padding */
+                box-sizing: border-box;
+                padding-left: 58px;
+            }
+            .edit-box .edit-box-content form div label{
+                display: inline-block;
+                width: 80px;
+                margin-left: 20px;
+            }
+            .edit-box .edit-box-content form div input {
+                padding: 5px 10px;
+            }
+            #student-edit-btn{
+                padding: 5px 20px;
+                background-color: #1890ff;
+            }
+            .content #list {
+                display: block;
+            }
+            .content div:target {
+                display: block;
+            }
+            .active {
+                background-color: #1890ff;
+            }
+            #increase {
+                width: 100%;
+                height: 100%;
+                /* background-color: cornsilk; */
+            }
+            #increase form {
+                width: 50%;
+                margin: 0px auto;
+                line-height: 45px;
+            }
+            #increase form div {
+                width: 400px;
+            }
+            #increase form label {
+                display: block;
+            }
+            #increase form input {
+                width: 400px;
+                height: 35px;
+                font-size: 15px;
+                border-radius: 5px;
+                /* outline: none; */
+            }
+            #increase form input[type='radio'] {
+                width: 20px;
+                height: 20px;
+                margin-left: 105px;
+            }
+            #increase form button {
+                width: 100%;
+                padding: 10px 0px;
+                margin: 10px 0px;
+                background-color: #1890ff;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="top">
+                <img src="./logo.png" alt="" class="logo">
+            </div>
+            <ul class="leftNav">
+                <li id="title">学生管理</li>
+                <li class="active">
+                    <a href="#list">学生列表</a>
+                </li>
+                <li>
+                    <a href="#increase">新增学生</a>
+                </li>
+            </ul>
+            <div class="content">
+                <div id="list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>姓名</th>
+                                <th>学号</th>
+                                <th>邮箱</th>
+                                <th>性别</th>
+                                <th>出生年份</th>
+                                <th>手机号</th>
+                                <th>家庭住址</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="edit-box">
+                    <div class="edit-box-content">
+                      <h2>编辑信息</h2>
+                      <form id="student-edit-form">
+                        <div><label for="edit-name">姓名</label><input type="text" id="edit-name" name="name"></div>
+                        <div><label for="edit-sNo">学号</label><input type="text" readonly id="edit-sNo" name="sNo"></div>
+                        <div><label for="edit-sex">性别</label>
+                          <input type="radio" id="edit-male" value="0" name="sex" checked><label for="edit-male" style="width: 20px;">男</label>
+                          <input type="radio" id="edit-female" value="1" name="sex"><label for="edit-female" style="width: 20px;">女</label>
+                        </div>
+                        <div><label for="edit-birth">出生年份</label><input type="text" id="edit-birth" name="birth"></div>
+                        <div><label for="edit-phone">电话</label><input type="text" id="edit-phone" name="phone"></div>
+                        <div><label for="edit-address">地址</label><input type="text" id="edit-address" name="address"></div>
+                        <div><label for="edit-email">邮箱</label><input type="text" id="edit-email" name="email"></div>
+                        <div><label for=""></label>
+                          <input type="submit" value="确认修改" id="student-edit-btn" name="btn">
+                        </div>
+                      </form>
+                    </div>
+                </div>
+                <div id="increase">
+                    <form action="">
+                        <div><label for="#name">姓名:</label><input type="text" name="name" id="name"></div>
+                        <div><label for="#sNo">学号:</label><input type="text" name="sNo" id="sNo"></div>
+                        <div><label for="#email">邮箱:</label><input type="text" name="email" id="email"></div>
+                        <div><label for="">性别:</label><input type="radio" name="sex" value="0" checked><span>男</span><input type="radio" name="sex" value="1"><span>女</span></div>
+                        <div><label for="#birth">出生年份:</label><input type="text" name="birth" id="birth"></div>
+                        <div><label for="#phone">手机号:</label><input type="text" name="phone" id="phone"></div>
+                        <div><label for="#address">家庭住址:</label><input type="text" name="address" id="address"></div>
+                        <div><button>submit</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="./Ajax.js"></script>
+        <script>
+            function bindEvent () {
+                var leftNav = document.querySelector('.leftNav');
+                leftNav.onclick = function (event) {
+                    event = window.event || event;
+                    if(event.target.parentNode.tagName == 'LI') {
+                        addremoveClass(event.target.parentNode);
+                    }
+                }
+            }
+            function addremoveClass (dom) {
+                // console.log([...dom.parentNode.children]);
+                [...dom.parentNode.children].forEach(function (elem,index) {
+                    elem.className = '';
+                })
+                dom.className = 'active';
+            }
+            bindEvent();
+
+            var increaseform = document.querySelector('#increase form');
+            var formBtn = document.querySelector('#increase div button');
+            formBtn.onclick = function (e) {
+                e.preventDefault();
+                formData = getFromData(increaseform);
+                // console.log(formData);
+                dataStr = '';
+                for(var i in formData.data) {
+                    dataStr += i + '=' + formData.data[i] + '&';
+                }
+                dataStr += 'appkey=PhilRandWu_1622380683185';
+                Ajax('GET','http://open.duyiedu.com/api/student/addStudent',dataStr,function (res) {
+                    // console.log(res.msg);
+                    alert(res.msg);
+                    location.hash = 'list';
+                    var liA = document.querySelector("ul li a[href='#list']").parentNode;
+                    addremoveClass(liA);
+                    location.reload()
+                },true);
+            }
+            
+            function getFromData (form) {
+                var name = form.name.value;
+                var sNo = form.sNo.value;
+                var email = form.email.value;
+                var sex = form.sex.value;
+                var birth = form.birth.value;
+                var phone = form.phone.value;
+                var address = form.address.value;
+                var result = {
+                    data:{},
+                    // 当前表单是否校验成功，默认是成功
+                    status:"success",
+                    // 如果校验不成功，提示信息
+                    msg:""
+                }
+                // console.log(name,sNo,email,birth,phone,address);
+                if(!name || !sNo || !email || !birth || !phone || !address) {
+                    result.status = 'fail';
+                    result.msg = '请填写相应的内容！！！';
+                    return result;
+                }
+                emailReg =  /^[A-Za-z0-9._%-]+@([A-Za-z0-9-]+.)+[A-Za-z]{2,4}$/;
+                if(!emailReg.test(email)) {
+                    result.status = 'fail';
+                    result.msg = '请填写正确的邮箱格式！！！';
+                    return result;
+                }
+                
+                phoneReg = /^1[3456789]\d{9}$/;
+                if(!phoneReg.test(phone)) {
+                    result.status = 'fail';
+                    result.msg = '请填写正确的手机格式！！！';
+                    return result;
+                }
+                result.data = {
+                    name,
+                    sNo,
+                    email,
+                    name,
+                    sex,
+                    birth,
+                    phone,
+                    address
+                }
+                return result;
+            }
+            // 查询
+            var returnData = [];
+            var tbody = document.querySelector('#list tbody');
+            Ajax('GET','http://open.duyiedu.com/api/student/findAll','appkey=PhilRandWu_1622380683185',function (res) {
+                display(res);
+            },false);
+            function display (res) {
+                console.log(res);
+                var str = '';
+                returnData = res.data;
+                returnData.forEach(function (elem,index) {
+                    sexName = elem.sex == 0 ? '男' : '女';
+                    str += '<tr><td>' + 
+                        elem.id + '</td><td>' + 
+                        elem.name + '</td><td>' + 
+                        elem.sNo + '</td><td>' + 
+                        elem.email + '</td><td>' + 
+                        sexName + '</td><td>' + 
+                        elem.birth + '</td><td>' + 
+                        elem.phone + '</td><td>' + 
+                        elem.address + '</td><td><button class="change" dataId="' + index + '">编辑</button><button class="delete" dataId="' + index + '">删除</button></td></tr>';
+                })
+                // console.log(str);
+                tbody.innerHTML = str;
+            }
+            var editBox = document.getElementsByClassName('edit-box')[0];
+            tbody.onclick = function (e) {
+                if(e.target.tagName == "BUTTON") {
+                    if(e.target.className == 'change') {
+                        editBox.style.display = "block";
+
+                        // 拿到自定义属性值
+                        var val = e.target.getAttribute("dataId");
+                        // console.log(val);
+                        var form = document.querySelector("#student-edit-form");
+                        form.name.value = returnData[val].name;    
+                        form.sNo.value = returnData[val].sNo;    
+                        form.sex.value = returnData[val].sex;    
+                        form.birth.value = returnData[val].birth;    
+                        form.phone.value = returnData[val].phone;    
+                        form.address.value = returnData[val].address;    
+                        form.email.value = returnData[val].email;    
+                         // 确认修改点击事件
+                        document.querySelector("#student-edit-btn").onclick = function(e){
+                            editBox.style.display = "none";
+                            var result = getFromData(form);
+                            // console.log(result.data);
+                            var str = "";
+                            for(var i in result.data){
+                                str += i + "=" + result.data[i] + "&";
+                            }
+                            str += "appkey=PhilRandWu_1622380683185";
+                            // console.log(str);
+                            Ajax("GET","http://open.duyiedu.com/api/student/updateStudent",str,function(res){
+                               alert(res.msg);
+                            },true)
+                        }
+
+                    }else {
+                        var val = e.target.getAttribute('dataId');
+                        var sNo = returnData[val].sNo;
+                        Ajax('GET',"http://open.duyiedu.com/api/student/delBySno","sNo=" + sNo + "&appkey=PhilRandWu_1622380683185",function (res) {
+                            alert(res.msg);
+                            history.go(0);
+                        },true);
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
